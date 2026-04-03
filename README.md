@@ -1,6 +1,6 @@
 # Antricu — Queue Management System
 
-**Antricu** Sistem Manajemen Antrian  yang dirancang untuk mengelola seluruh operasional antrian di instansi pelayanan publik (Puskesmas, Rumah Sakit, Klinik, dll) secara digital. Mulai dari pengambilan nomor antrian oleh pengunjung via Kiosk, pemanggilan antrian oleh petugas loket, Pemantauan status antrian secara real-time melalui layar display dan scan QR Code. Dibangun dengan stack **Laravel 12 (Backend REST API)** dan **Vue.js 3 + Vite (Frontend SPA)**.
+**Antricu** Sistem Manajemen Antrian  yang dirancang untuk mengelola seluruh operasional antrian di instansi pelayanan publik (Puskesmas, Rumah Sakit, Klinik, dll) secara digital. Mulai dari pengambilan nomor antrian oleh pengunjung via Kiosk, pemanggilan antrian oleh petugas loket (Pemanggilan otomatis dengan Text-to-Speech), Pemantauan status antrian secara real-time melalui layar display dan scan QR Code. Dibangun dengan stack **Laravel 12 (Backend REST API)** dan **Vue.js 3 + Vite (Frontend SPA)**.
 
 ---
 
