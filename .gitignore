@@ -1,0 +1,32 @@
+# ========================================
+# ROOT - File-file draft
+# ========================================
+hotelmanagementsystem.md
+classrom-lms.md
+kasir-seafoorpangestu.md
+Architecture & Technical Planning.md
+task.md
+task copy.md
+
+# File SVG & drawio sementara di root
+929b0550-c3b4-48cc-8584-b648596fa3a6.svg
+sdwd.svg
+
+# Dev script
+dev.bat
+
+# ========================================
+# SYSTEM / IDE / OS
+# ========================================
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.idea/
+.vscode/
+.fleet/
+.nova/
+.zed/

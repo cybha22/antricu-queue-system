@@ -1,0 +1,94 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: antricu-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: antricu
+      MYSQL_USER: antricu
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecret"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - antricu-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: antricu-backend
+    restart: unless-stopped
+    environment:
+      APP_NAME: Antricu
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      FRONTEND_URL: http://localhost:3000
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: antricu
+      DB_USERNAME: antricu
+      DB_PASSWORD: secret
+      SESSION_DRIVER: database
+      SESSION_DOMAIN: localhost
+      SANCTUM_STATEFUL_DOMAINS: "localhost:3000,localhost:8000,127.0.0.1:3000,127.0.0.1:8000"
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_storage:/var/www/storage/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - antricu-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: antricu-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - antricu-network
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: antricu-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - antricu-network
+
+volumes:
+  db_data:
+  backend_storage:
+
+networks:
+  antricu-network:
+    driver: bridge
